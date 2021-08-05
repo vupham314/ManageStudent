@@ -1,6 +1,7 @@
 public class Main {
+    ManageStudent manage = new ManageStudent();
+    public void menu(){
 
-    public static void menu(){
         System.out.println("""
                 1: add student
                 2: show all student
@@ -17,26 +18,26 @@ public class Main {
                 int number = Integer.parseInt(ManageStudent.scn.nextLine());
                 for (int i = 1; i <= number; i++) {
                     System.out.println("student " + i);
-                    ManageStudent.addStudent(ManageStudent.createStudent());
+                    manage.addStudent(manage.createStudent());
                     System.out.println();
                 }
             }
             case 2 -> {
-                ManageStudent.showAll();
+                manage.showAll();
             }
             case 3 -> {
-                ManageStudent.insertSortByAvgMark();
-                ManageStudent.showAll();
+                manage.selectSortByMark();
+                manage.showAll();
             }
             case 4 -> {
-                ManageStudent.insertSortByFirstName();
-                ManageStudent.showAll();
+                manage.insertSortByFirstName();
+                manage.showAll();
             }
             case 5 -> {
-                ManageStudent.showStudentByMark();
+                manage.showStudentByMark();
             }
             case 6 -> {
-                ManageStudent.showStudentByNameSubject();
+                manage.showStudentByNameSubject();
             }
             case 7 -> {
                 return;
@@ -48,7 +49,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main.menu();
+        Main menu = new Main();
+        menu.menu();
     }
 
 }
