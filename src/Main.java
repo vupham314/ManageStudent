@@ -13,7 +13,13 @@ public class Main {
         System.out.print("choice: ");
         switch (Integer.parseInt(ManageStudent.scn.nextLine())){
             case 1 -> {
-                ManageStudent.addStudent(ManageStudent.createStudent());
+                System.out.print("number of student: ");
+                int number = Integer.parseInt(ManageStudent.scn.nextLine());
+                for (int i = 0; i < number; i++) {
+                    System.out.println("student " + i);
+                    ManageStudent.addStudent(ManageStudent.createStudent());
+                    System.out.println();
+                }
             }
             case 2 -> {
                 ManageStudent.showAll();
