@@ -22,10 +22,11 @@ public class Student {
 
     public double avgMark(){
         double sumMark = 0;
+        assert subjects != null;
         for (Subject subject: subjects) {
             sumMark += subject.getMark();
         }
-        return sumMark/subjects.size();
+        return (double) Math.round(sumMark/subjects.size() * 100) / 100;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Student {
     public void showInformation(){
         System.out.println(this.toString());
         showSubject();
-        System.out.println(avgMark());
+        System.out.println("average mark: " + avgMark());
     }
 
     public int getId() {
@@ -72,4 +73,5 @@ public class Student {
     public ArrayList<Subject> getSubjects() {
         return subjects;
     }
+
 }
