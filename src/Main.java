@@ -15,7 +15,7 @@ public class Main {
             case 1 -> {
                 System.out.print("number of student: ");
                 int number = Integer.parseInt(ManageStudent.scn.nextLine());
-                for (int i = 0; i < number; i++) {
+                for (int i = 1; i <= number; i++) {
                     System.out.println("student " + i);
                     ManageStudent.addStudent(ManageStudent.createStudent());
                     System.out.println();
