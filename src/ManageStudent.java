@@ -2,21 +2,21 @@ import java.util.*;
 
 public class ManageStudent {
     public static Scanner scn = new Scanner(System.in);
-    public static ArrayList<Student> studentList = new ArrayList<>();
+    public ArrayList<Student> students = new ArrayList<>();
 
-    public static void showAll(){
-        for (Student student : studentList) {
+    public void showAll(){
+        for (Student student : students) {
             student.showInformation();
             System.out.println();
         }
     }
 
-    public static void showStudentByMark(){
+    public void showStudentByMark(){
         System.out.print("enter average mark: ");
         double mark = Double.parseDouble(scn.nextLine());
 
         boolean check = true;
-        for (Student student: studentList) {
+        for (Student student: students) {
             if(student.avgMark() >= mark){
                 check = false;
                 student.showInformation();
@@ -28,12 +28,12 @@ public class ManageStudent {
         }
     }
 
-    public static void showStudentByNameSubject(){
+    public void showStudentByNameSubject(){
         System.out.print("enter subject name: ");
         String subjectName = scn.nextLine();
 
         boolean check = true;
-        for (Student student: studentList) {
+        for (Student student: students) {
             boolean checkStudent = false;
             for (Subject subject : student.getSubjects()) {
                 if(subject.getNameSubject().equals(subjectName)){
@@ -51,32 +51,92 @@ public class ManageStudent {
         }
     }
 
-    public static void insertSortByFirstName() {
-        for  ( int  i =  1 ; i <studentList.size(); i ++) {
-            Student temp = studentList.get(i);
+    public void insertSortByFirstName() {
+//        for  ( int  i =  1 ; i <students.size(); i ++) {
+//            Student temp = students.get(i);
+//            int  j = i -  1 ;
+//            for  (; j >=  0  && students.get(i).getName().getFirstName().compareTo(temp.getName().getFirstName()) > 0 ; j--) {
+//                students.set(j+1, students.get(j));
+//            }
+//            students.set(j+1, temp);
+//        }
+        Collections.sort(students, new Comparator<Student>() {
+                    @Override
+                    public int compare(Student st1, Student st2) {
+                        if (st1.getName().getFirstName().compareToIgnoreCase(st2.getName().getFirstName()) > 0) {
+                            return 1;
+                        } else {
+                            if (st1.getName().getFirstName().compareToIgnoreCase(st2.getName().getFirstName()) == 0) {
+                                return 0;
+                            } else {
+                                return -1;
+                            }
+                        }
+                    }
+                }
+        );
+    }
+
+    public void insertSortByAvgMark() {
+        for (int i = 1; i < students.size(); i ++) {
+            Student temp = students.get(i);
             int  j = i -  1 ;
-            for  (; j >=  0  && studentList.get(i).getName().getFirstName().compareTo(temp.getName().getFirstName()) > 0 ; j--) {
+            for  (; j >=  0  && students.get(i).avgMark() > temp.avgMark(); j--) {
                 // Moves the value greater than temp back by one unit
-                studentList.set(j+1, studentList.get(j));
+                students.set(j+1, students.get(j));
             }
-            studentList.set(j+1, temp);
+            students.set(j+1, temp);
         }
     }
 
-    public static void insertSortByAvgMark() {
-        for  ( int  i =  1 ; i <studentList.size(); i ++) {
-            Student temp = studentList.get(i);
-            int  j = i -  1 ;
-            for  (; j >=  0  && studentList.get(i).avgMark() > temp.avgMark(); j--) {
-                // Moves the value greater than temp back by one unit
-                studentList.set(j+1, studentList.get(j));
+
+
+
+
+    public void selectSortByMark () {
+//        int  position =  0 ;
+//        for  ( int  i =  0 ; i <students.size(); i ++) {
+//            int  j = i +  1 ;
+//            position = i;
+//            Student temp = students.get(i);
+//            for  (; j <students.size(); j ++) {
+//                if  (students.get(i).avgMark() > temp.avgMark()) {
+//                    temp = students.get(j);
+//                    position = j;
+//                }
+//            }
+//            students.set(position,students.get(i));
+//            students.set(i,temp);
+//        }
+        Collections.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student st1, Student st2) {
+                if (st1.avgMark() < st2.avgMark()) {
+                    return 1;
+                } else {
+                    if (st1.avgMark() == st2.avgMark()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
             }
-            studentList.set(j+1, temp);
         }
+        );
     }
 
-    public static void addStudent(Student student){
-        studentList.add(student);
+//    public static void sort(){
+//        for (int i = 0; ) {
+//            for (Student student2 : studentList) {
+//                if  (student1.avgMark() > student2.avgMark()) {
+//
+//                }
+//            }
+//        }
+//    }
+
+    public void addStudent(Student student){
+        students.add(student);
     }
 
     public static FullName createFulName(){
@@ -89,7 +149,7 @@ public class ManageStudent {
         return new FullName(firstName, surname);
     }
 
-    public static Student createStudent(){
+    public Student createStudent(){
         FullName name = createFulName();
 
         System.out.print("day of birth: ");
@@ -113,7 +173,7 @@ public class ManageStudent {
         return student;
     }
 
-    public static Subject createSubject(){
+    public Subject createSubject(){
         System.out.print("name subject: "); // tên môn học
         String nameSubject = scn.nextLine();
 
@@ -122,7 +182,7 @@ public class ManageStudent {
         return new Subject(nameSubject, mark);
     }
 
-    public static double checkMark(){
+    public double checkMark(){
         double mark;
         try{
             System.out.print("mark: ");
